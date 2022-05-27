@@ -27,7 +27,7 @@ public class CustomDTO {
     private String itemCode;
     private int qty;
 
-    public CustomDTO() {
+    public CustomDTO(String string, LocalDate parse, String rstString, String s, int anInt, BigDecimal bigDecimal) {
     }
 
     public CustomDTO(String id, String name, String address, String code, String description, BigDecimal unitPrice, int qtyOnHand, String orderId, LocalDate orderDate, String customerId, String customerName, BigDecimal orderTotal, String itemCode, int qty) {
