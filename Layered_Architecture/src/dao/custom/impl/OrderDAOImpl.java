@@ -1,5 +1,7 @@
-package dao;
+package dao.custom.impl;
 
+import dao.SQLUtil;
+import dao.custom.OrderDao;
 import model.OrderDTO;
 
 import java.sql.ResultSet;
@@ -7,7 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 
-public class OrderDAOImpl implements OrderDao{
+public class OrderDAOImpl implements OrderDao {
     @Override
     public ArrayList<OrderDTO> getAll() throws SQLException, ClassNotFoundException {
         return null;
