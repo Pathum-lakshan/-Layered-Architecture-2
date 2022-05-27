@@ -355,7 +355,7 @@ public class PlaceOrderFormController {
                 item.setQtyOnHand(item.getQtyOnHand() - detail.getQty());
 
                 //update item
-                System.out.println(item);
+
                 boolean update = itemDAO.update(item);
 
                 if (!update) {
