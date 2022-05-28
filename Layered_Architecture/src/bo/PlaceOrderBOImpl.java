@@ -17,6 +17,7 @@ import dao.custom.impl.ItemDAOImpl;
 import dao.custom.impl.OrderDAOImpl;
 import dao.custom.impl.OrderDetailsDAOImpl;
 import db.DBConnection;
+import javafx.scene.control.Alert;
 import model.CustomerDTO;
 import model.ItemDTO;
 import model.OrderDTO;
@@ -25,6 +26,7 @@ import model.OrderDetailDTO;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PlaceOrderBOImpl {
@@ -61,8 +63,8 @@ public class PlaceOrderBOImpl {
             }
 
             //Search & Update Item
-            //ItemDTO item = findItem(detail.getItemCode());
-            ItemDTO item = null;
+            ItemDTO item = findItem(detail.getItemCode());
+
             item.setQtyOnHand(item.getQtyOnHand() - detail.getQty());
 
             //update item
@@ -93,4 +95,38 @@ public class PlaceOrderBOImpl {
     public boolean existItem(String code) throws SQLException, ClassNotFoundException {
         return itemDAO.exist(code);
     }
+
+    public boolean existCustomer(String id) throws SQLException, ClassNotFoundException {
+        return customerDAO.exist(id);
+    }
+
+
+    public String generateNewOrderId() throws SQLException, ClassNotFoundException {
+
+            return orderDAO.generateNewID();
+
+    }
+    public ArrayList<CustomerDTO> loadAllCustomerIds() throws SQLException, ClassNotFoundException {
+
+       return customerDAO.getAll();
+
+    }
+
+    public   ArrayList<ItemDTO>  loadAllItemCodes() throws SQLException, ClassNotFoundException {
+
+           return itemDAO.getAll();
+
+    }
+
+    public ItemDTO findItem(String code) {
+        try {
+            return itemDAO.search(code);
+        } catch (SQLException e) {
+            throw new RuntimeException("Failed to find the Item " + code, e);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
+
