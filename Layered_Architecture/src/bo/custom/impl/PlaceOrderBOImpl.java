@@ -9,10 +9,8 @@
 package bo.custom.impl;
 
 import bo.custom.PlaceOrderBO;
-import dao.custom.CustomerDAO;
-import dao.custom.ItemDAO;
-import dao.custom.OrderDao;
-import dao.custom.OrderDetailsDAO;
+import dao.DAOFactory;
+import dao.custom.*;
 import dao.custom.impl.CustomerDAOImpl;
 import dao.custom.impl.ItemDAOImpl;
 import dao.custom.impl.OrderDAOImpl;
@@ -31,11 +29,13 @@ import java.util.List;
 
 public class PlaceOrderBOImpl implements PlaceOrderBO {
 
+    DAOFactory daoFactory =  DAOFactory.getDaoFactory();
 
-    private final CustomerDAO customerDAO = new CustomerDAOImpl();
-    private final ItemDAO itemDAO = new ItemDAOImpl();
-    private final OrderDao orderDAO = new OrderDAOImpl();
-    private final OrderDetailsDAO orderDetailsDAO = new OrderDetailsDAOImpl();
+    private final CustomerDAO customerDAO = (CustomerDAO) daoFactory.getDAO(DAOFactory.DAOTypes.CUSTOMER);
+    private final ItemDAO itemDAO = (ItemDAO) daoFactory.getDAO(DAOFactory.DAOTypes.ITEM);
+    private final OrderDao orderDAO = (OrderDao) daoFactory.getDAO(DAOFactory.DAOTypes.ORDER);
+    private final OrderDetailsDAO orderDetailsDAO = (OrderDetailsDAO) daoFactory.getDAO(DAOFactory.DAOTypes.ORDERDETAILS);
+    private final QueryDAO queryDAO = (QueryDAO) daoFactory.getDAO(DAOFactory.DAOTypes.QUERYDAO);
 
     public boolean placeOrder(String orderId, LocalDate orderDate, String customerId, List<OrderDetailDTO> orderDetails) throws SQLException, ClassNotFoundException {
         /*Transaction*/
