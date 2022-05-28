@@ -1,17 +1,10 @@
 package controller;
 
-import bo.PlaceOrderBOImpl;
+import bo.custom.impl.PlaceOrderBOImpl;
+import bo.custom.PlaceOrderBO;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
-import dao.custom.CustomerDAO;
-import dao.custom.ItemDAO;
-import dao.custom.OrderDao;
-import dao.custom.OrderDetailsDAO;
-import dao.custom.impl.CustomerDAOImpl;
-import dao.custom.impl.ItemDAOImpl;
-import dao.custom.impl.OrderDAOImpl;
-import dao.custom.impl.OrderDetailsDAOImpl;
 import db.DBConnection;
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -27,7 +20,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.CustomerDTO;
 import model.ItemDTO;
-import model.OrderDTO;
 import model.OrderDetailDTO;
 import view.tdm.OrderDetailTM;
 
@@ -60,7 +52,7 @@ public class PlaceOrderFormController {
     public Label lblDate;
     public Label lblTotal;
 
-    private final PlaceOrderBOImpl placeOrderBO = new PlaceOrderBOImpl();
+    private final PlaceOrderBO placeOrderBO = new PlaceOrderBOImpl();
 
     private String orderId;
 

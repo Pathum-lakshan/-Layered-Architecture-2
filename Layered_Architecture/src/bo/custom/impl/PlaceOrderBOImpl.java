@@ -6,8 +6,9 @@
  * @Since : 0.1.0
  */
 
-package bo;
+package bo.custom.impl;
 
+import bo.custom.PlaceOrderBO;
 import dao.custom.CustomerDAO;
 import dao.custom.ItemDAO;
 import dao.custom.OrderDao;
@@ -17,7 +18,6 @@ import dao.custom.impl.ItemDAOImpl;
 import dao.custom.impl.OrderDAOImpl;
 import dao.custom.impl.OrderDetailsDAOImpl;
 import db.DBConnection;
-import javafx.scene.control.Alert;
 import model.CustomerDTO;
 import model.ItemDTO;
 import model.OrderDTO;
@@ -29,7 +29,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlaceOrderBOImpl {
+public class PlaceOrderBOImpl implements PlaceOrderBO {
 
     private final CustomerDAO customerDAO = new CustomerDAOImpl();
     private final ItemDAO itemDAO = new ItemDAOImpl();
@@ -63,7 +63,8 @@ public class PlaceOrderBOImpl {
             }
 
             //Search & Update Item
-            ItemDTO item = findItem(detail.getItemCode());
+
+            ItemDTO item = itemDAO.search(detail.getItemCode());
 
             item.setQtyOnHand(item.getQtyOnHand() - detail.getQty());
 
@@ -116,17 +117,6 @@ public class PlaceOrderBOImpl {
 
            return itemDAO.getAll();
 
-    }
-
-    public ItemDTO findItem(String code) {
-        try {
-            return itemDAO.search(code);
-        } catch (SQLException e) {
-            throw new RuntimeException("Failed to find the Item " + code, e);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 }
 
