@@ -1,11 +1,10 @@
 package controller;
 
+import bo.BOFactory;
 import bo.custom.ManageCustomerBO;
 import bo.custom.impl.ManageCustomerBOImpl;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
-import dao.custom.CustomerDAO;
-import dao.custom.impl.CustomerDAOImpl;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -32,7 +31,7 @@ import java.util.List;
 
 public class ManageCustomersFormController {
     //Property Injection (DI)
-    private final ManageCustomerBO manageCustomerBO = new ManageCustomerBOImpl();
+    private final ManageCustomerBO manageCustomerBO = (ManageCustomerBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.MANAGECUSTOMER);
     public AnchorPane root;
     public JFXTextField txtCustomerName;
     public JFXTextField txtCustomerId;

@@ -1,11 +1,11 @@
 package controller;
 
+import bo.BOFactory;
 import bo.custom.ManageItemBO;
+import bo.custom.PlaceOrderBO;
 import bo.custom.impl.ManageItemsBOImpl;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
-import dao.custom.ItemDAO;
-import dao.custom.impl.ItemDAOImpl;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -29,7 +29,7 @@ import java.util.ArrayList;
 
 
 public class ManageItemsFormController {
-    private final ManageItemBO manageItemsBO = new ManageItemsBOImpl();
+    private final ManageItemBO manageItemsBO =(ManageItemBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.MANAGEITEM);
     public AnchorPane root;
     public JFXTextField txtCode;
     public JFXTextField txtDescription;

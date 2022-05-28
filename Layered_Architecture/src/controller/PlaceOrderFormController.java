@@ -1,5 +1,6 @@
 package controller;
 
+import bo.BOFactory;
 import bo.custom.impl.PlaceOrderBOImpl;
 import bo.custom.PlaceOrderBO;
 import com.jfoenix.controls.JFXButton;
@@ -52,7 +53,8 @@ public class PlaceOrderFormController {
     public Label lblDate;
     public Label lblTotal;
 
-    private final PlaceOrderBO placeOrderBO = new PlaceOrderBOImpl();
+    private final PlaceOrderBO placeOrderBO = (PlaceOrderBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.PLACEORDER);
+
 
     private String orderId;
 

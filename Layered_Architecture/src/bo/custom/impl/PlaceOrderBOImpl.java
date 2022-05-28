@@ -11,10 +11,6 @@ package bo.custom.impl;
 import bo.custom.PlaceOrderBO;
 import dao.DAOFactory;
 import dao.custom.*;
-import dao.custom.impl.CustomerDAOImpl;
-import dao.custom.impl.ItemDAOImpl;
-import dao.custom.impl.OrderDAOImpl;
-import dao.custom.impl.OrderDetailsDAOImpl;
 import db.DBConnection;
 import model.CustomerDTO;
 import model.ItemDTO;
@@ -29,7 +25,7 @@ import java.util.List;
 
 public class PlaceOrderBOImpl implements PlaceOrderBO {
 
-    DAOFactory daoFactory =  DAOFactory.getDaoFactory();
+    private final DAOFactory daoFactory =  DAOFactory.getDaoFactory();
 
     private final CustomerDAO customerDAO = (CustomerDAO) daoFactory.getDAO(DAOFactory.DAOTypes.CUSTOMER);
     private final ItemDAO itemDAO = (ItemDAO) daoFactory.getDAO(DAOFactory.DAOTypes.ITEM);

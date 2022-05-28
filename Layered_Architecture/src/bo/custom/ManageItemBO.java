@@ -8,12 +8,13 @@
 
 package bo.custom;
 
+import bo.SuperBO;
 import model.ItemDTO;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public interface ManageItemBO {
+public interface ManageItemBO extends SuperBO {
     ArrayList<ItemDTO> loadAllItems() throws SQLException, ClassNotFoundException;
     void deleteItems(String code) throws SQLException, ClassNotFoundException;
     void saveItems(ItemDTO itemDTO) throws SQLException, ClassNotFoundException;
