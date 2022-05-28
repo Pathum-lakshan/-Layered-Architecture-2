@@ -1,5 +1,7 @@
 package controller;
 
+import bo.custom.ManageItemBO;
+import bo.custom.impl.ManageItemsBOImpl;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import dao.custom.ItemDAO;
@@ -27,7 +29,7 @@ import java.util.ArrayList;
 
 
 public class ManageItemsFormController {
-    private final ItemDAO itemDAO = new ItemDAOImpl();
+    private final ManageItemBO manageItemsBO = new ManageItemsBOImpl();
     public AnchorPane root;
     public JFXTextField txtCode;
     public JFXTextField txtDescription;
@@ -73,7 +75,7 @@ public class ManageItemsFormController {
         try {
             /*Get all items*/
             //Loos Coupling
-            ArrayList<ItemDTO> allItems = itemDAO.getAll();
+            ArrayList<ItemDTO> allItems = manageItemsBO.loadAllItems();
 
             for (ItemDTO item : allItems) {
                 tblItems.getItems().add(new ItemTM(item.getCode(), item.getDescription(), item.getUnitPrice(), item.getQtyOnHand()));
@@ -136,7 +138,7 @@ public class ManageItemsFormController {
             }
 
             //Loos Coupling
-            itemDAO.delete(code);
+            manageItemsBO.deleteItems(code);
 
             tblItems.getItems().remove(tblItems.getSelectionModel().getSelectedItem());
             tblItems.getSelectionModel().clearSelection();
@@ -177,7 +179,8 @@ public class ManageItemsFormController {
                 }
                 //Save Item
                 //Loos Coupling
-                itemDAO.save(new ItemDTO(code, description, unitPrice, qtyOnHand));
+
+                manageItemsBO.saveItems(new ItemDTO(code, description, unitPrice, qtyOnHand));
 
                 tblItems.getItems().add(new ItemTM(code, description, unitPrice, qtyOnHand));
 
@@ -194,7 +197,8 @@ public class ManageItemsFormController {
                 }
                 /*Update Item*/
                 //Loos Coupling
-                itemDAO.update(new ItemDTO(code, description, unitPrice, qtyOnHand));
+
+                manageItemsBO.updateItems(new ItemDTO(code, description, unitPrice, qtyOnHand));
 
                 ItemTM selectedItem = tblItems.getSelectionModel().getSelectedItem();
                 selectedItem.setDescription(description);
@@ -214,14 +218,14 @@ public class ManageItemsFormController {
 
     private boolean existItem(String code) throws SQLException, ClassNotFoundException {
         //Loos Coupling
-        return itemDAO.exist(code);
+        return manageItemsBO.existItem(code);
     }
 
 
     private String generateNewId() {
         try {
             //Loos Coupling
-            return itemDAO.generateNewID();
+            return manageItemsBO.generateNewId();
 
 
         } catch (SQLException e) {
