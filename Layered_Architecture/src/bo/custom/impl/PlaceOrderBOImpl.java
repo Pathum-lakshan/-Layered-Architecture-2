@@ -16,6 +16,7 @@ import dto.CustomerDTO;
 import dto.ItemDTO;
 import dto.OrderDTO;
 import dto.OrderDetailDTO;
+import entity.Customer;
 import entity.Item;
 import entity.Order;
 import entity.OrderDetails;
@@ -85,11 +86,13 @@ public class PlaceOrderBOImpl implements PlaceOrderBO {
     }
 
     public CustomerDTO searchCustomer(String id) throws SQLException, ClassNotFoundException {
-        return customerDAO.search(id);
+        Customer search = customerDAO.search(id);
+        return new CustomerDTO(search.getId(),search.getName(),search.getAddress());
     }
 
     public ItemDTO searchItem(String code) throws SQLException, ClassNotFoundException {
-        return itemDAO.search(code);
+        Item search = itemDAO.search(code);
+        return new ItemDTO(search.getCode(),search.getDescription(),search.getUnitPrice(),search.getQtyOnHand());
     }
 
     public boolean existItem(String code) throws SQLException, ClassNotFoundException {
@@ -108,14 +111,31 @@ public class PlaceOrderBOImpl implements PlaceOrderBO {
     }
     public ArrayList<CustomerDTO> loadAllCustomerIds() throws SQLException, ClassNotFoundException {
 
-       return customerDAO.getAll();
+        ArrayList<Customer> all = customerDAO.getAll();
+
+        ArrayList<CustomerDTO> allCustomer = new ArrayList<>();
+
+        for (Customer customer:all
+        ) {
+            allCustomer.add(new CustomerDTO(customer.getId(), customer.getName(), customer.getAddress()));
+        }
+
+        return allCustomer;
 
     }
 
     public   ArrayList<ItemDTO>  loadAllItemCodes() throws SQLException, ClassNotFoundException {
 
-           return itemDAO.getAll();
+        ArrayList<Item> all = itemDAO.getAll();
 
+        ArrayList<ItemDTO> allItem = new ArrayList<>();
+
+        for (Item item:all
+             ) {
+            allItem.add(new ItemDTO(item.getCode(),item.getDescription(),item.getUnitPrice(), item.getQtyOnHand()));
+        }
+
+        return allItem;
     }
 }
 
