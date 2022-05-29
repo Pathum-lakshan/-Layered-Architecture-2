@@ -3,7 +3,7 @@ package dto;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-
+import java.util.List;
 
 
 public class OrderDTO  {
@@ -11,6 +11,23 @@ public class OrderDTO  {
     private LocalDate orderDate;
     private String customerId;
     private String customerName;
+    private List<OrderDetailDTO> orderDetails;
+
+    public OrderDTO(String orderId, LocalDate orderDate, String customerId, List<OrderDetailDTO> orderDetails) {
+        this.orderId = orderId;
+        this.orderDate = orderDate;
+        this.customerId = customerId;
+        this.orderDetails = orderDetails;
+    }
+
+    public List<OrderDetailDTO> getOrderDetails() {
+        return orderDetails;
+    }
+
+    public void setOrderDetails(List<OrderDetailDTO> orderDetails) {
+        this.orderDetails = orderDetails;
+    }
+
     private BigDecimal orderTotal;
 
     public OrderDTO() {
@@ -77,6 +94,7 @@ public class OrderDTO  {
                 ", orderDate=" + orderDate +
                 ", customerId='" + customerId + '\'' +
                 ", customerName='" + customerName + '\'' +
+                ", orderDetails=" + orderDetails +
                 ", orderTotal=" + orderTotal +
                 '}';
     }

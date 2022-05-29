@@ -12,6 +12,7 @@ import bo.custom.ManageCustomerBO;
 import dao.DAOFactory;
 import dao.custom.CustomerDAO;
 import dto.CustomerDTO;
+import entity.Customer;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -20,15 +21,25 @@ public class ManageCustomerBOImpl implements ManageCustomerBO {
     private final CustomerDAO customerDAO = (CustomerDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.CUSTOMER);
 
     public ArrayList<CustomerDTO> loadAllCustomers() throws SQLException, ClassNotFoundException {
-            return customerDAO.getAll();
+
+        ArrayList<Customer> all = customerDAO.getAll();
+
+        ArrayList<CustomerDTO> allCustomer = new ArrayList<>();
+
+        for (Customer customer: all
+             ) {
+            allCustomer.add(new CustomerDTO(customer.getId(), customer.getName(), customer.getAddress()));
+        }
+
+        return allCustomer;
     }
 
     public void saveCustomer(CustomerDTO customerDTO) throws SQLException, ClassNotFoundException {
-        customerDAO.save(customerDTO);
+        customerDAO.save(new Customer(customerDTO.getId(), customerDTO.getName(), customerDTO.getAddress()));
     }
 
     public void UpdateCustomer(CustomerDTO customerDTO) throws SQLException, ClassNotFoundException {
-        customerDAO.update(customerDTO);
+        customerDAO.update(new Customer(customerDTO.getId(), customerDTO.getName(), customerDTO.getAddress()));
     }
 
     public boolean existCustomer(String id) throws SQLException, ClassNotFoundException {

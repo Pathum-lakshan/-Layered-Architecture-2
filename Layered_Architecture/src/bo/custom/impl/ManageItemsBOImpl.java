@@ -12,6 +12,7 @@ import bo.custom.ManageItemBO;
 import dao.DAOFactory;
 import dao.custom.ItemDAO;
 import dto.ItemDTO;
+import entity.Item;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -20,7 +21,16 @@ public class ManageItemsBOImpl implements ManageItemBO {
     private final ItemDAO itemDAO = (ItemDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.ITEM);
 
     public ArrayList<ItemDTO> loadAllItems() throws SQLException, ClassNotFoundException {
-         return itemDAO.getAll();
+        ArrayList<Item> all = itemDAO.getAll();
+
+        ArrayList<ItemDTO> allCustomer = new ArrayList<>();
+
+        for (Item item:all
+             ) {
+            allCustomer.add(new ItemDTO(item.getCode(),item.getDescription(),item.getUnitPrice(),item.getQtyOnHand()));
+        }
+
+        return allCustomer;
     }
 
     public void deleteItems(String code) throws SQLException, ClassNotFoundException {
@@ -28,11 +38,11 @@ public class ManageItemsBOImpl implements ManageItemBO {
     }
 
     public void saveItems(ItemDTO itemDTO) throws SQLException, ClassNotFoundException {
-        itemDAO.save(itemDTO);
+        itemDAO.save(new Item(itemDTO.getCode(),itemDTO.getDescription() , itemDTO.getQtyOnHand(), itemDTO.getUnitPrice()));
     }
 
     public void updateItems(ItemDTO itemDTO) throws SQLException, ClassNotFoundException {
-        itemDAO.update(itemDTO);
+        itemDAO.update(new Item(itemDTO.getCode(),itemDTO.getDescription() , itemDTO.getQtyOnHand(), itemDTO.getUnitPrice()));
     }
 
     public boolean existItem(String code) throws SQLException, ClassNotFoundException {

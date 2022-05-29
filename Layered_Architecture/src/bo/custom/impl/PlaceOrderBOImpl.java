@@ -16,6 +16,9 @@ import dto.CustomerDTO;
 import dto.ItemDTO;
 import dto.OrderDTO;
 import dto.OrderDetailDTO;
+import entity.Item;
+import entity.Order;
+import entity.OrderDetails;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -33,17 +36,17 @@ public class PlaceOrderBOImpl implements PlaceOrderBO {
     private final OrderDetailsDAO orderDetailsDAO = (OrderDetailsDAO) daoFactory.getDAO(DAOFactory.DAOTypes.ORDERDETAILS);
     private final QueryDAO queryDAO = (QueryDAO) daoFactory.getDAO(DAOFactory.DAOTypes.QUERYDAO);
 
-    public boolean placeOrder(String orderId, LocalDate orderDate, String customerId, List<OrderDetailDTO> orderDetails) throws SQLException, ClassNotFoundException {
+    public boolean placeOrder(OrderDTO orderDTO) throws SQLException, ClassNotFoundException {
         /*Transaction*/
 
         Connection connection = DBConnection.getDbConnection().getConnection();
         /*if order id already exist*/
-        if (orderDAO.exist(orderId)) {
+        if (orderDAO.exist(orderDTO.getOrderId())) {
 
         }
 
         connection.setAutoCommit(false);
-        boolean save = orderDAO.save(new OrderDTO(orderId, orderDate, customerId));
+        boolean save = orderDAO.save(new Order(orderDTO.getOrderId(), orderDTO.getOrderDate(), orderDTO.getCustomerId()));
 
         if (!save) {
             connection.rollback();
@@ -51,8 +54,8 @@ public class PlaceOrderBOImpl implements PlaceOrderBO {
             return false;
         }
 
-        for (OrderDetailDTO detail : orderDetails) {
-            boolean save1 = orderDetailsDAO.save(detail);
+        for (OrderDetailDTO detail : orderDTO.getOrderDetails()) {
+            boolean save1 = orderDetailsDAO.save(new OrderDetails(detail.getOid(),detail.getItemCode(),detail.getQty(),detail.getUnitPrice()));
             if (!save1) {
                 connection.rollback();
                 connection.setAutoCommit(true);
@@ -60,14 +63,13 @@ public class PlaceOrderBOImpl implements PlaceOrderBO {
             }
 
             //Search & Update Item
-
-            ItemDTO item = itemDAO.search(detail.getItemCode());
+            ItemDTO item = searchItem(detail.getItemCode());
 
             item.setQtyOnHand(item.getQtyOnHand() - detail.getQty());
 
             //update item
 
-            boolean update = itemDAO.update(item);
+            boolean update = itemDAO.update(new Item(item.getCode(),item.getDescription(),item.getQtyOnHand(),item.getUnitPrice()));
 
             if (!update) {
                 connection.rollback();

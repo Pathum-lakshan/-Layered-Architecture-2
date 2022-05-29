@@ -8,6 +8,8 @@
 
 package entity;
 
+import dto.OrderDetailDTO;
+
 import java.math.BigDecimal;
 
 public class OrderDetails {
@@ -25,6 +27,10 @@ public class OrderDetails {
         this.qty = qty;
         this.unitPrice = unitPrice;
     }
+
+
+
+
 
     public String getOid() {
         return oid;
