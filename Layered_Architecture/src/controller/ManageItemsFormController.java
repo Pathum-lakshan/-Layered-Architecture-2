@@ -2,8 +2,6 @@ package controller;
 
 import bo.BOFactory;
 import bo.custom.ManageItemBO;
-import bo.custom.PlaceOrderBO;
-import bo.custom.impl.ManageItemsBOImpl;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import javafx.application.Platform;
@@ -18,7 +16,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import model.ItemDTO;
+import dto.ItemDTO;
 import view.tdm.ItemTM;
 
 import java.io.IOException;

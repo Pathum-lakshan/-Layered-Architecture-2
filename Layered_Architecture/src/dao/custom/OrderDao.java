@@ -1,7 +1,8 @@
 package dao.custom;
 
 import dao.CrudDAO;
-import model.OrderDTO;
+import dto.OrderDTO;
+import entity.Order;
 
-public interface OrderDao extends CrudDAO<OrderDTO, String> {
+public interface OrderDao extends CrudDAO<Order, String> {
 }
